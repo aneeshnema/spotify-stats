@@ -16,7 +16,7 @@ Built With:
 1.  Register App on [Spotify dashboard](https://developer.spotify.com/dashboard/) and add `http://localhost:8888/callback` to Redirect URIs in settings.
 2.  Create .env file in the root of the project like `.env.example`
 3.  `yarn && yarn client:install`
-4.  `npm run dev`
+4.  `yarn dev`
 
 ## Todo
 
