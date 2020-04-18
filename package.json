@@ -11,7 +11,7 @@
     "lint": "eslint \"**/*.js\"",
     "lint:fix": "eslint --fix \"**/*.js\"",
     "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
-    "heroku-postbuild": "yarn client:install && yarn build"
+    "heroku-postbuild": "cd client/ && yarn install --production && yarn build"
   },
   "author": "Aneesh Nema <aneeshnema@gmail.com>",
   "license": "ISC",
