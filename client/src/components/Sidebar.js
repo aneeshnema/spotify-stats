@@ -51,7 +51,11 @@ const Sidebar = () => {
   const getUser = () => (
     <ListItem>
       <ListItemAvatar>
-        <Avatar alt='Remy Sharp' src={user.images[0].url} className={classes.large} />
+        <Avatar
+          alt={user.display_name}
+          src={user.images.length > 0 ? user.images[0].url : ''}
+          className={classes.large}
+        />
       </ListItemAvatar>
       <ListItemText>
         <strong>{user.display_name}</strong>
