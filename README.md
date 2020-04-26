@@ -1,6 +1,6 @@
 # Spotify-Stats
 
-A React to see your listening habits on Spotify.
+A React App to see your listening habits on Spotify.
 
 Built With:
 
