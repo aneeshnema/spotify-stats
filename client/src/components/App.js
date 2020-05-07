@@ -4,6 +4,8 @@ import LoginScreen from './LoginScreen';
 import Boilerplate from './Boilerplate';
 import TopTracks from './TopTracks';
 import TopArtists from './TopArtists';
+import Playlist from './Playlist';
+import PlaylistProfile from './PlaylistProfile';
 
 import { token } from '../spotify';
 import { theme } from '../style/theme';
@@ -18,6 +20,8 @@ const Home = () => {
         <TopTracks path='/' />
         <TopTracks path='/tracks' />
         <TopArtists path='/artists' />
+        <Playlist path='/playlist' />
+        <PlaylistProfile path='/playlist/:id' />
       </Router>
     </Boilerplate>
   );

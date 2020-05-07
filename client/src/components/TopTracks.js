@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+
+import { makeStyles, Paper, Tab, Tabs } from '@material-ui/core';
 
 import Loader from './Loader';
 import Track from './Track';
@@ -41,7 +39,7 @@ const TopTracks = () => {
         >
           <Tab label='1 month' value='short_term' />
           <Tab label='6 months' value='medium_term' />
-          <Tab label='1 year' value='long_term' />
+          <Tab label='All Time' value='long_term' />
         </Tabs>
       </Paper>
       {tracks ? tracks.items.map((track, key) => <Track key={key} track={track} />) : <Loader />}

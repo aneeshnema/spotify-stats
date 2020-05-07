@@ -1,11 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles, Card, CardContent, CardMedia, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,8 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Artist = ({ artist }) => {
-  const theme = useTheme();
-  const classes = useStyles(theme);
+  const classes = useStyles();
 
   return (
     <Card className={classes.root}>

@@ -1,16 +1,12 @@
 import axios from 'axios';
 
-// const REFRESH_URI = process.env.NODE_ENV !== 'production'
-//     ? 'http://localhost:8888/refresh_token'
-//     : '/refresh_token';
-
 const EXPIRATION_TIME = 3600000;
 
 // FUNCTION TO RETRIEVE OBJECT STORED IN STORAGE
 
 const getObject = (key) => {
   const value = window.sessionStorage.getItem(key);
-  if (value === null) return value;
+  if (value === null || value === 'undefined') return null;
   return JSON.parse(value);
 };
 
@@ -115,7 +111,7 @@ export const getTopTracks = async (term) => {
     const { data } = await axios.get('https://api.spotify.com/v1/me/top/tracks', {
       headers,
       params: {
-        limit: '30',
+        limit: 30,
         time_range: term,
       },
     });
@@ -131,7 +127,7 @@ export const getTopArtists = async (term) => {
     const { data } = await axios.get('https://api.spotify.com/v1/me/top/artists', {
       headers,
       params: {
-        limit: '30',
+        limit: 30,
         time_range: term,
       },
     });
@@ -139,4 +135,71 @@ export const getTopArtists = async (term) => {
     return data;
   }
   return top_artists;
+};
+
+export const getPlaylists = async () => {
+  var playlists = getObject('playlists');
+  if (playlists === null) {
+    playlists = {};
+    var { data } = await axios.get('https://api.spotify.com/v1/me/playlists', {
+      headers,
+      params: {
+        limit: 50,
+      },
+    });
+    for (let p of data.items) playlists[p.id] = p;
+    while (data.next !== null) {
+      data = await axios
+        .get(data.next, {
+          headers,
+          params: {
+            limit: 50,
+          },
+        })
+        .then((res) => res.data);
+      for (let p of data.items) playlists[p.id] = p;
+    }
+    setObject('playlists', playlists);
+  }
+  return playlists;
+};
+
+export const getAudioFeatures = async (...ids) =>
+  axios
+    .get('https://api.spotify.com/v1/audio-features', {
+      headers,
+      params: {
+        ids: ids.join(','),
+      },
+    })
+    .then((res) => res.data.audio_features);
+
+export const getPlaylistDetails = async (id) => {
+  var playlist = getObject(id);
+  if (playlist !== null) return playlist;
+  const playlists = await getPlaylists();
+  if (playlists[id] === undefined) {
+    console.log(`No mathching playlist with id ${id} found`);
+    return undefined;
+  }
+  playlist = playlists[id];
+  playlist.items = [];
+  playlist.audio_features = [];
+  var data = { next: `https://api.spotify.com/v1/playlists/${id}/tracks` };
+  while (data.next !== null) {
+    data = await axios
+      .get(data.next, {
+        headers,
+        params: {
+          fields:
+            'items(track(album(id,images,name,release_date),artists(genres,id,name),id,external_url,name,popularity,preview_url)),next',
+        },
+      })
+      .then((res) => res.data);
+    playlist.items.push(...data.items.map((ob) => ob.track));
+    let audio_features = await getAudioFeatures(data.items.map((ob) => ob.track.id).join(','));
+    playlist.audio_features.push(...audio_features);
+  }
+  setObject(id, playlist);
+  return playlist;
 };

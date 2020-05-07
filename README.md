@@ -20,6 +20,6 @@ Built With:
 
 ## Todo
 
-- [ ] Add playlist analyzer
+- [x] Add playlist analyzer
 - [ ] Add support to export Top Tracks to new playlist.
-- [ ] Convert to PWA?
+- [ ] Add feature to reorder playlist

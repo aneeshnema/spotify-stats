@@ -1,14 +1,6 @@
 import React from 'react';
 
-import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import Typography from '@material-ui/core/Typography';
-
-// const LOGIN_URI = process.env.NODE_ENV !== 'production'
-//     ? 'http://localhost:8888/login'
-//     : 'https://yourgoodtaste.herokuapp.com/login';
+import { makeStyles, Button, Box, CssBaseline, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
